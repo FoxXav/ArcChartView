@@ -401,16 +401,18 @@ class ArcChartView @JvmOverloads constructor(mContext: Context, attrs: Attribute
     fun setSectionValue(section: Int, value: Int) {
         if (section < 0 || section > (sectionsCount - 1)) return
         if (value < 0 || value > linesCount) return
-        var total=0
-        for (j in 0..(sectionsCount - 1)) {
-            total+=sectionsValue[j]
-        }
+        var newVal = value;
+        if (counter) {
+            var total = 0
+            for (j in 0..(sectionsCount - 1)) {
+                total += sectionsValue[j]
+            }
 
-        val origVal=sectionsValue[section]
-        var newVal=value;
-        val nbPointRestant=counterMax-total
-        if (total+(newVal-origVal)>counterMax){
-            newVal=origVal+nbPointRestant
+            val origVal = sectionsValue[section]
+            val nbPointRestant = counterMax - total
+            if (total + (newVal - origVal) > counterMax) {
+                newVal = origVal + nbPointRestant
+            }
         }
         sectionsValue[section] = newVal
         invalidate()
